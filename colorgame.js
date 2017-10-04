@@ -11,6 +11,19 @@ function fullRGB() {
     return 'rgb(' + pickRGB() + ', ' + pickRGB() + ', ' + pickRGB() + ')';
 }
 
+function getValues(rgb) {
+    let values = [];
+    let start = 4
+    let end = rgb.indexOf(",")
+    for (i = 0; i < 3; i++) {
+        values.push(rgb.slice(start, end));
+        start = end + 2;
+        end = rgb.indexOf(",", start);
+    };
+    return values;
+}
+
+
 //generate the colors array
 function populateColors(length) {
     arr = []
@@ -22,11 +35,11 @@ function populateColors(length) {
 
 let squares = document.querySelectorAll(".square");
 let pickedColor = pickColor();
+let values = getValues(pickedColor);
 
-let colorDisplay = document.getElementById("colorDisplay");
 let messageDisplay = document.getElementById("message");
 
-const header = document.getElementById("top");
+const header = document.querySelector("header");
 
 //get buttons
 const reset = document.getElementById("reset");
@@ -34,13 +47,17 @@ const easy = document.getElementById("easyBtn");
 const hard = document.getElementById("hardBtn");
 
 // display the RGB value pf the picked color
-colorDisplay.textContent = pickedColor;
+// colorDisplay.textContent = pickedColor;
 
 
 function changeColors(color) {
     for (i = 0; i < colors.length; i++ ) {
         squares[i].style.backgroundColor = color;
     };
+    header.style.backgroundColor = color;
+    r.style.color = "white";
+    g.style.color = "white";
+    b.style.color = "white";
 }
 
 function pickColor() {
@@ -49,15 +66,32 @@ function pickColor() {
 }
 
 //reset game
+let diff = 6;
 
 reset.addEventListener("click", function() {
     resetGame(diff)
 })
 
+const rBox = document.getElementById("r-box");
+const gBox = document.getElementById("g-box");
+const bBox = document.getElementById("b-box");
+
+const r = document.getElementById("r");
+const g = document.getElementById("g");
+const b = document.getElementById("b");
+
+function displayValues(arr) {
+    rBox.textContent = arr[0];
+    gBox.textContent = arr[1];
+    bBox.textContent = arr[2];
+}
+
 function resetGame(num) {
     colors = populateColors(num);
     pickedColor = pickColor();
-    colorDisplay.textContent = pickedColor;
+    values = getValues(pickedColor);
+    displayValues(values);
+    // colorDisplay.textContent = pickedColor;
     for (i = 0; i < squares.length; i++) {
         squares[i].style.backgroundColor = colors[i];
         //wait for click
@@ -68,7 +102,6 @@ function resetGame(num) {
             if (clickedColor === pickedColor) {
                 changeColors(pickedColor);
                 messageDisplay.textContent = "Correct!";
-                header.style.backgroundColor = pickedColor;
                 reset.textContent = 'PLAY AGAIN?';
             }
             else {
@@ -78,19 +111,18 @@ function resetGame(num) {
         });
     }
     reset.textContent = "RESET?";
-    header.style.backgroundColor = "steelblue";
     messageDisplay.textContent = ""
 }
 
-resetGame(6);
+resetGame(diff);
 
-let diff = 6;
-
+// check for screen width
 const mobileSize = window.matchMedia( "(max-width: 450px)" );
-
+//get colNum CSS variable
 let htmlStyles = window.getComputedStyle(document.querySelector("html"));
 let colNum = parseInt(htmlStyles.getPropertyValue("--colNum"));
 
+//easy / hard mode buttons
 easy.addEventListener("click", function() {
     easy.classList.add("selected");
     hard.classList.remove("selected");
