@@ -1,0 +1,172 @@
+body {
+    max-width: 100vw;
+    background-color: #232323;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: white;
+    margin: 0 auto;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: normal;
+}
+
+header {
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    max-width: 100%;
+    margin: 0 auto;
+
+}
+
+button {
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    height: 100%;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+    font-size: 1rem;
+    color: steelblue;
+    outline: none;
+}
+
+.square {
+    background: purple;
+    padding-bottom: 100%;
+}
+
+.selected, button:hover {
+    background-color: steelblue;
+    color: white;
+}
+
+#buttons {
+    display: inline-grid;
+    grid-gap: 0;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 
+        "a b c";
+    height: 100%;
+    margin: 0 auto;
+
+}
+
+#reset, #message, #easy-hard {
+    align-self: center;
+}
+
+#reset {
+    grid-area: a;
+    justify-self: start;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 10px 10px;
+    max-width: 100vw;
+    width: 600px;
+    height: 400px;
+    max-height: 66.6vw;
+    margin: 0rem auto;
+}
+
+#message {
+    font-size: 16px;
+    grid-area: b;
+    justify-self: center;
+}
+
+#easy-hard {
+    grid-area: c;
+    justify-self: end;
+    height: 100%;
+    margin: 0;
+}
+
+#top {
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+#sub-top {
+    width: 100%;
+    background-color: white;
+    height: 2.5rem;
+    text-align: center;
+}
+
+#colorDisplay {
+    font-size: 4rem;
+}
+
+
+@media screen and (max-width: 620px) {
+    #colorDisplay {
+        font-size: 3rem;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    header {
+        grid-template-columns: 3fr 1fr;
+        grid-template-rows: 1fr;
+    }
+    #top {
+        padding: 0.3rem;
+    }
+    #colorDisplay {
+        font-size: 1.8rem;
+    }
+    h1 {
+        font-size: 1rem;
+        margin-top: 0.4rem;
+    }
+
+    button {
+        font-size: 0.5rem;
+    }
+
+    #colorDisplay {
+        font-size: 1.3rem;
+    }
+
+    #buttons {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas:
+        "a b"
+        "c d";
+    }
+    #sub-top {
+        height: 100%;
+    }
+    #reset {
+        grid-area: a;
+        align-self: center;
+        font-size: 0.5rem;
+        max-width: 100%;
+    }
+    #easy-hard {
+        grid-area: b;
+    }
+    #message {
+        grid-area: c;
+        justify-self: center;
+        font-size: 0.6rem;
+    }
+
+    #container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-gap: 5vw;
+        max-width: 75vw;
+        max-height: 25vw;
+    }
+}
