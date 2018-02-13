@@ -1,10 +1,11 @@
 :root {
     --colNum: 2;
+    --mainColor: lightgrey;
 }
 
-
 body {
-    max-width: 100vw;
+    width: 100vw;
+    height: 100vw;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0 auto;
     box-sizing: border-box;
@@ -19,8 +20,8 @@ h1 {
 }
 
 header {
-    background-color: #99A3AC;
-    max-width: 100%;
+    background-color: var(--mainColor);
+    width: 100%;
     margin: 0 auto;
     color: white;
     display: grid;
@@ -44,10 +45,11 @@ button {
 .square {
     background: purple;
     height: 100%;
+    transition: all 0.2s
 }
 
 .selected, button:hover {
-    background-color: steelblue;
+    background-color: var(--mainColor);
     color: white;
 }
 
@@ -73,17 +75,26 @@ button {
 }
 #r, #g, #b {
     font-size: 3rem;
+    font-weight: 800;
     text-align: center;
+    vertical-align: center;
+    text-shadow: 2px 2px 2px #000
 }
 
 #r {
     color: #E55934;
+    background: url("images/redBG.png") no-repeat center;
+    background-size: 100%;
 }
 #g {
     color: #9BC53D;
+    background: url("images/greenBG.png") no-repeat center;
+    background-size: 100%;
 }
 #b {
     color: #5BC0EB;
+    background: url("images/blueBG.png") no-repeat center;
+    background-size: 100%;
 }
 
 #reset, #message, #easy-hard {
@@ -179,6 +190,6 @@ button {
         height: 100%;
     }
     .square {
-        height: 25vh;
+        height: 23.33vh;
     }
 }

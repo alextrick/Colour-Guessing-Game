@@ -1,5 +1,9 @@
 let colors = populateColors(6);
 
+//get CSS variables
+let htmlStyles = window.getComputedStyle(document.querySelector("html"));
+let colNum = parseInt(htmlStyles.getPropertyValue("--colNum"));
+let mainColor = htmlStyles.getPropertyValue("--mainColor");
 
 // choose random colors;
 
@@ -21,6 +25,20 @@ function getValues(rgb) {
         end = rgb.indexOf(",", start);
     };
     return values;
+}
+
+function lighten(color) {
+    let rgbArray = getValues(color);
+    for (i = 0; i < rgbArray.length; i++) {
+        rgbArray[i] = parseInt(rgbArray[i])
+        if (rgbArray[i] < 200) {
+            rgbArray[i] += 50;
+        }
+        else {
+            rgbArray[i] = 250;
+        }
+    }
+    return 'rgb(' + rgbArray[0] + ', ' + rgbArray[1] + ', ' + rgbArray[2] + ')';
 }
 
 
@@ -52,18 +70,27 @@ const hard = document.getElementById("hardBtn");
 
 function changeColors(color) {
     for (i = 0; i < colors.length; i++ ) {
+        squares[i].style.filter = null;
         squares[i].style.backgroundColor = color;
     };
     header.style.backgroundColor = color;
-    r.style.color = "white";
-    g.style.color = "white";
-    b.style.color = "white";
+    r.style.background = color;
+    g.style.background = color;
+    b.style.background = color;
+}
+
+function resetImages() {
+    r.style.background = null
+    g.style.background = null
+    b.style.background = null
 }
 
 function pickColor() {
    let number = Math.floor(Math.random() * colors.length);
    return colors[number];
 }
+
+
 
 //reset game
 let diff = 6;
@@ -87,13 +114,17 @@ function displayValues(arr) {
 }
 
 function resetGame(num) {
+    header.style.backgroundColor = mainColor;
     colors = populateColors(num);
     pickedColor = pickColor();
     values = getValues(pickedColor);
     displayValues(values);
+    resetImages();
     // colorDisplay.textContent = pickedColor;
     for (i = 0; i < squares.length; i++) {
+        squares[i].style.filter = null;
         squares[i].style.backgroundColor = colors[i];
+        
         //wait for click
         squares[i].addEventListener("click", function() {
             //store clicked color
@@ -105,7 +136,7 @@ function resetGame(num) {
                 reset.textContent = 'PLAY AGAIN?';
             }
             else {
-                this.style.backgroundColor = "#232323";
+                this.style.filter = "brightness(200%) saturate(50%)";                              
                 messageDisplay.textContent = "Try again.";
             }
         });
@@ -118,9 +149,18 @@ resetGame(diff);
 
 // check for screen width
 const mobileSize = window.matchMedia( "(max-width: 450px)" );
-//get colNum CSS variable
-let htmlStyles = window.getComputedStyle(document.querySelector("html"));
-let colNum = parseInt(htmlStyles.getPropertyValue("--colNum"));
+
+//set padding to vertically center text;
+const height = header.clientHeight;
+let fontData = window.getComputedStyle(r).getPropertyValue('font-size')
+let fontHeight = parseFloat(fontData);
+const elements = header.children;
+
+if (mobileSize) {
+    for (i = 0; i < 3; i++) {
+        elements[i].style.paddingTop = (height  - fontHeight) / 2 + 'px';
+    }
+}
 
 //easy / hard mode buttons
 easy.addEventListener("click", function() {
